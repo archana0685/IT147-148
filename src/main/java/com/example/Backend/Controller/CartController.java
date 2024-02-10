@@ -41,7 +41,7 @@ public class CartController {
     Cart_ProductRepo cartProductRepo;
 
     @PostMapping("/addToCart")
-    public String addToCart(@RequestBody CartModel cartModel, HttpServletRequest request){
+    public ResponseEntity<?> addToCart(@RequestBody CartModel cartModel, HttpServletRequest request){
 
         String requestHeader = request.getHeader("Authorization");
         String token = requestHeader.substring(7);
@@ -75,7 +75,7 @@ public class CartController {
             cart.setP(l);
         }
         cartRepo.save(cart);
-        return "OK";
+        return ResponseEntity.ok(cartProduct);
     }
 
     @GetMapping("/viewCart")

@@ -93,7 +93,7 @@ public class OrderDetailsController {
         orders.setCustomer(customer);
         orders.setStatus("Paid");
         orderRepo.save(orders);
-        sendMail(orders, customer.getEmail(),customer.getName());
+        //sendMail(orders, customer.getEmail(),customer.getName());
 
         return ResponseEntity.ok(orders);
     }

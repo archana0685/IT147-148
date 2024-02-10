@@ -43,7 +43,7 @@ public class PaymentController {
             JSONObject orderObj = new JSONObject();
 
             float amt = Float.parseFloat(amount);
-            orderObj.put("amount",amt*100);
+            orderObj.put("amount",amt);
             orderObj.put("currency","INR");
             orderObj.put("receipt","receipt#1");
 
