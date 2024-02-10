@@ -8,6 +8,7 @@ import com.example.Backend.Entity.Customer;
 import com.example.Backend.Entity.Product;
 import com.example.Backend.Model.CartModel;
 import com.example.Backend.Repository.CartRepo;
+import com.example.Backend.Repository.Cart_ProductRepo;
 import com.example.Backend.Repository.CustomerRepo;
 import com.example.Backend.Repository.ProductRepo;
 import com.example.Backend.Security.JwtHelper;
@@ -35,6 +36,9 @@ public class CartController {
 
     @Autowired
     JwtHelper jwtHelper;
+
+    @Autowired
+    Cart_ProductRepo cartProductRepo;
 
     @PostMapping("/addToCart")
     public String addToCart(@RequestBody CartModel cartModel, HttpServletRequest request){
@@ -89,8 +93,40 @@ public class CartController {
         return ResponseEntity.ok(cartProduct);
     }
 
+    @PutMapping("/clearCart/{id}")
+    public ResponseEntity<?>clearCart(@PathVariable("id")Long id){
+        Cart cart = cartRepo.findById(id).orElseThrow();
+        cart.setP(null);
+        cartRepo.save(cart);
+        return ResponseEntity.ok(cart);
+    }
+
+    @PutMapping("/deleteCartProduct/{productId}")
+    public ResponseEntity<?>deleteCartProduct(@PathVariable("productId")Long pid){
+        cartProductRepo.deleteById(pid);
+        return ResponseEntity.ok("OK");
+    }
+
+    @PutMapping("/incQyt/{productId}")
+    public ResponseEntity<?>incProductQyt(@PathVariable("productId")Long pid){
+        Cart_Product cartProduct = cartProductRepo.findById(pid).orElseThrow();
+        int qyt  = cartProduct.getQuty();
+        cartProduct.setQuty(qyt++);
+        cartProductRepo.save(cartProduct);
+        return ResponseEntity.ok("OK");
+    }
+
+    @PutMapping("/decQyt/{productId}")
+    public ResponseEntity<?>decProductQyt(@PathVariable("productId")Long pid){
+        Cart_Product cartProduct = cartProductRepo.findById(pid).orElseThrow();
+        int qyt  = cartProduct.getQuty();
+        cartProduct.setQuty(qyt--);
+        cartProductRepo.save(cartProduct);
+        return ResponseEntity.ok("OK");
+    }
     @GetMapping("/test")
     public ResponseEntity<?> test(){
         return ResponseEntity.ok("ok");
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.Backend.Controller;
 
 import com.example.Backend.Entity.*;
+import com.example.Backend.Mail.LogInVerification;
 import com.example.Backend.Model.Payment;
 import com.example.Backend.Repository.*;
 import com.example.Backend.Security.JwtHelper;
@@ -40,6 +41,10 @@ public class OrderDetailsController {
 
     @Autowired
     AddrrDetailsRepo addrrDetailsRepo;
+
+    @Autowired
+    LogInVerification mailService;
+
 
     @PostMapping("/createOrder")
     public ResponseEntity<?>createOrder(@RequestBody Payment payment, HttpServletRequest request){
@@ -88,7 +93,14 @@ public class OrderDetailsController {
         orders.setCustomer(customer);
         orders.setStatus("Paid");
         orderRepo.save(orders);
+        sendMail(orders, customer.getEmail(),customer.getName());
 
         return ResponseEntity.ok(orders);
+    }
+
+    public void sendMail(Orders orders,String email,String Name){
+        String body = "Hey "+ Name+" Your order has been confirmed! Thanks For Shopping.Your order details are"+
+                orders.getOrderItems()+" Date : "+orders.getDate()+"Thank You";
+        mailService.sendEmail(email,"Your order has been confirmed!",body);
     }
 }
