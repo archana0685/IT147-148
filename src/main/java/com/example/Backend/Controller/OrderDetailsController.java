@@ -9,10 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -102,5 +99,18 @@ public class OrderDetailsController {
         String body = "Hey "+ Name+" Your order has been confirmed! Thanks For Shopping.Your order details are"+
                 orders.getOrderItems()+" Date : "+orders.getDate()+"Thank You";
         mailService.sendEmail(email,"Your order has been confirmed!",body);
+    }
+
+    @GetMapping("/fetchOrders")
+    public List<Orders> fetchOrders(HttpServletRequest request){
+
+        String requestHeader = request.getHeader("Authorization");
+        String token = requestHeader.substring(7);
+        String username = this.jwtHelper.getUsernameFromToken(token);
+
+        Customer customer = customerRepo.findByEmail(username);
+        List<Orders>orders = orderRepo.findByCustomer(customer);
+
+        return orders;
     }
 }
