@@ -1,8 +1,11 @@
 package com.example.Backend.Entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Cart {
@@ -12,7 +15,7 @@ public class Cart {
     Long id;
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    List<Cart_Product>p;
+    Set<Cart_Product> p;
 
     @OneToOne
     Customer c;
@@ -25,11 +28,11 @@ public class Cart {
         this.id = id;
     }
 
-    public List<Cart_Product> getP() {
+    public Set<Cart_Product> getP() {
         return p;
     }
 
-    public void setP(List<Cart_Product> p) {
+    public void setP(Set<Cart_Product> p) {
         this.p = p;
     }
 

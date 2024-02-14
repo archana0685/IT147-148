@@ -28,7 +28,6 @@ public class ForgetPasswordController {
     @PostMapping("/forgotPassword")
     public ResponseEntity<?> forgotPassword(@RequestBody ForgetPassword forgetPassword){
         Customer customer = customerRepo.findByEmail(forgetPassword.getEmail());
-        System.out.println(forgetPassword.getUrl()+"?token="+"1202");
 
         if(customer == null){
             return ResponseEntity.ok("Account does not exists create new account");
@@ -38,6 +37,7 @@ public class ForgetPasswordController {
             int code = (int)(Math.random()*100000);
             String token = String.valueOf(code);
             String body = url+"?token="+token;
+            System.out.println(body);
 
             ForgetPasswordToken forgetPassword1 = new ForgetPasswordToken();
             forgetPassword1.setCustomer(customer);
@@ -60,7 +60,7 @@ public class ForgetPasswordController {
             Customer c = f.getCustomer();
             c.setPassword(r.getPassword());
             customerRepo.save(c);
-//            tokenRepo.delete(f);
+            tokenRepo.delete(f);
             return ResponseEntity.ok("OK");
         }
     }

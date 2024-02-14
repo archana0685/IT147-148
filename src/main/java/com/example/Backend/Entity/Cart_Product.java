@@ -1,6 +1,8 @@
 package com.example.Backend.Entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -12,7 +14,8 @@ public class Cart_Product {
     Long id;
 
     String size;
-    @ManyToMany
+
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY)
     List<Product> product;
 
     int quty;

@@ -18,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/cart")
@@ -59,7 +61,7 @@ public class CartController {
         cartProduct.setSize(size);
         cartProduct.setQuty(quty);
 
-        List<Cart_Product>l = new ArrayList<>();
+        Set<Cart_Product> l = new HashSet<>();
 
         Cart  cart = cartRepo.findCartByC(c);
         if(cart==null){
@@ -88,21 +90,45 @@ public class CartController {
         System.out.println("view Cart");
         Customer c = customerRepo.findByEmail(username);
         Cart cart = cartRepo.findCartByC(c);
-        List<Cart_Product>cartProduct = cart.getP();
+        Set<Cart_Product>cartProduct = cart.getP();
 
         return ResponseEntity.ok(cartProduct);
     }
 
-    @PutMapping("/clearCart/{id}")
-    public ResponseEntity<?>clearCart(@PathVariable("id")Long id){
-        Cart cart = cartRepo.findById(id).orElseThrow();
+    @PutMapping("/clearCart")
+    public ResponseEntity<?>clearCart(HttpServletRequest request){
+
+        String requestHeader = request.getHeader("Authorization");
+        String token = requestHeader.substring(7);
+        String username = this.jwtHelper.getUsernameFromToken(token);
+
+        Customer customer = customerRepo.findByEmail(username);
+        Cart cart = cartRepo.findCartByC(customer);
+
         cart.setP(null);
         cartRepo.save(cart);
         return ResponseEntity.ok(cart);
     }
 
     @PutMapping("/deleteCartProduct/{productId}")
-    public ResponseEntity<?>deleteCartProduct(@PathVariable("productId")Long pid){
+    public ResponseEntity<?>deleteCartProduct(@PathVariable("productId")Long pid,HttpServletRequest request){
+
+        String requestHeader = request.getHeader("Authorization");
+        String token = requestHeader.substring(7);
+        String username = this.jwtHelper.getUsernameFromToken(token);
+
+        Customer customer = customerRepo.findByEmail(username);
+
+        Cart_Product c = cartProductRepo.findById(pid).orElseThrow();
+
+        Cart cart = cartRepo.findCartByC(customer);
+        boolean check1 = cart.getP().remove(c);
+        System.out.println(check1);
+
+        List<Product>p = c.getProduct();
+        Boolean check = c.getProduct().remove(p);
+        System.out.println(check);
+
         cartProductRepo.deleteById(pid);
         return ResponseEntity.ok("OK");
     }

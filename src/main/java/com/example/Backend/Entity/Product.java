@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -17,13 +18,12 @@ public class Product {
     String Name;
     Date date;
 
-
     String Category;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    List<Images>image;
+    @OneToMany(mappedBy = "product",cascade = {CascadeType.ALL},orphanRemoval = true,fetch = FetchType.EAGER)
+    Set<Images> image;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL},orphanRemoval = true,fetch = FetchType.EAGER)
     List<Product_Size>product_sizes;
 
     public String getCategory() {
@@ -42,12 +42,11 @@ public class Product {
         this.date = date;
     }
 
-
-    public List<Images> getImage() {
+    public Set<Images> getImage() {
         return image;
     }
 
-    public void setImage(List<Images> images) {
+    public void setImage(Set<Images> images) {
         this.image = images;
     }
 
