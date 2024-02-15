@@ -7,13 +7,10 @@ import com.example.Backend.Repository.ImagesRepo;
 import com.example.Backend.Repository.ProductRepo;
 import com.example.Backend.Repository.ProductSizeRepo;
 import com.example.Backend.ServiceImpl.ProductImpl;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
@@ -42,12 +39,11 @@ public class CrudProduct {
         Set<Images> images = product.getImage();
 
         try {
-            for(Images i : images)
+            for (Images i : images)
                 i.setProduct(product);
         }catch (Exception E){
             System.out.println(E);
         }
-
 
         Date date = new Date();
         product.setDate(date);
@@ -59,13 +55,13 @@ public class CrudProduct {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteImage(@RequestBody Images images) {
 
-            Long id = images.getImgId();
-            Images images1 =  imagesRepo.findById(id).orElseThrow();
-            images1.setImgUrl(images.getImgUrl());
-            images1.setImgView(images.getImgView());
-            imagesRepo.save(images1);
+        Long id = images.getImgId();
+        Images images1 =  imagesRepo.findById(id).orElseThrow();
+        images1.setImgUrl(images.getImgUrl());
+        images1.setImgView(images.getImgView());
+        imagesRepo.save(images1);
 
-            return ResponseEntity.ok("OK");
+        return ResponseEntity.ok("OK");
     }
 
     @PostMapping("/updateQyt")
@@ -73,32 +69,18 @@ public class CrudProduct {
     public ResponseEntity<?> updateQyt(@RequestBody Product_Size productSize) {
 
         try{
-        Long id = productSize.getPsId();
-        Product_Size productSize1 = productSizeRepo.findById(id).orElseThrow();
-        productSize1.setpSize(productSize.getpSize());
-        productSize1.setPrice(productSize.getPrice());
-        productSize1.setpStock(productSize.getpStock());
-        productSizeRepo.save(productSize1);}
+            Long id = productSize.getPsId();
+            Product_Size productSize1 = productSizeRepo.findById(id).orElseThrow();
+            productSize1.setpSize(productSize.getpSize());
+            productSize1.setPrice(productSize.getPrice());
+            productSize1.setpStock(productSize.getpStock());
+            productSizeRepo.save(productSize1);}
         catch (Exception E){
             System.out.println(E);
         }
 
         return ResponseEntity.ok("OK");
     }
-
-    @PutMapping("/deleteImage/{id}/{pid}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteImage(@PathVariable("id")Long id,@PathVariable("pid")Long pid) {
-
-            Product product = productRepo.findById(pid).orElseThrow();
-            Images images =  imagesRepo.findById(id).orElseThrow();
-            boolean check = product.getImage().remove(images);
-            System.out.println(check);
-
-            imagesRepo.deleteById(id);
-            return ResponseEntity.ok("OK");
-    }
-
 
     @GetMapping("/test")
     @PreAuthorize("hasAuthority('ADMIN')")
