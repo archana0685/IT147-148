@@ -2,10 +2,7 @@ package com.example.Backend.Controller;
 
 import com.example.Backend.Entity.Images;
 import com.example.Backend.Entity.Product;
-<<<<<<< HEAD
 import com.example.Backend.Entity.Product_Size;
-=======
->>>>>>> 0f44473bb40bebdba0389f58af2c5f357d5b6d42
 import com.example.Backend.Repository.ImagesRepo;
 import com.example.Backend.Repository.ProductRepo;
 import com.example.Backend.Repository.ProductSizeRepo;
@@ -35,7 +32,6 @@ public class CrudProduct {
     @Autowired
     ImagesRepo imagesRepo;
 
-<<<<<<< HEAD
     @Autowired
     ProductSizeRepo productSizeRepo;
 
@@ -46,27 +42,16 @@ public class CrudProduct {
         Set<Images> images = product.getImage();
 
         try {
-            for (Images i : images)
+            for(Images i : images)
                 i.setProduct(product);
         }catch (Exception E){
             System.out.println(E);
         }
-=======
-    @PostMapping("/addProduct")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
 
-        Set<Images> images = product.getImage();
 
-//        for(Images i : images)
-//            i.setProduct(product);
->>>>>>> 0f44473bb40bebdba0389f58af2c5f357d5b6d42
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         product.setDate(date);
         productRepo.save(product);
-<<<<<<< HEAD
         return "OK";
     }
 
@@ -99,9 +84,6 @@ public class CrudProduct {
         }
 
         return ResponseEntity.ok("OK");
-=======
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
->>>>>>> 0f44473bb40bebdba0389f58af2c5f357d5b6d42
     }
 
     @PutMapping("/deleteImage/{id}/{pid}")
