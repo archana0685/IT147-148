@@ -1,9 +1,6 @@
 package com.example.Backend.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Images {
@@ -12,6 +9,18 @@ public class Images {
     Long imgId;
     String imgUrl;
     String imgView;
+
+    @ManyToOne
+    Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     public Long getImgId() {
         return imgId;
     }

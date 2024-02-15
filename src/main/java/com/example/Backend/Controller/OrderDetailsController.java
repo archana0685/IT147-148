@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @CrossOrigin("*")
@@ -53,7 +54,7 @@ public class OrderDetailsController {
         Customer customer = customerRepo.findByEmail(username);
         Cart cart = cartRepo.findCartByC(customer);
 
-        List<Cart_Product>p = cart.getP();
+        Set<Cart_Product> p = cart.getP();
         List<Order_Items>orderItems = new ArrayList<>();
 
         for(Cart_Product cartProduct:p){
@@ -62,14 +63,13 @@ public class OrderDetailsController {
             orderItems1.setSize(cartProduct.getSize());
             Product product = cartProduct.getProduct().get(0);
 
-            Images images = product.getImage().get(0);
+            Images images = product.getImage().stream().findFirst().orElseThrow();
             orderItems1.setColor(product.getColor());
             orderItems1.setDescription(product.getDescription());
             orderItems1.setpId(product.getpId());
             orderItems1.setName(product.getName());
             orderItems1.setGender(product.getGender());
             orderItems1.setImage(images.getImgUrl());
-
 
             orderItems.add(orderItems1);
             orderItemsRepository.save(orderItems1);

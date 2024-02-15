@@ -9,7 +9,7 @@ public class ForgetPasswordToken {
     Long id;
     String Token;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
     Customer customer;
 
     public Long getId() {
