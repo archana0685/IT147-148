@@ -43,7 +43,7 @@ public class CartController {
     Cart_ProductRepo cartProductRepo;
 
     @PostMapping("/addToCart")
-    public ResponseEntity<?> addToCart(@RequestBody CartModel cartModel, HttpServletRequest request){
+    public String addToCart(@RequestBody CartModel cartModel, HttpServletRequest request){
 
         String requestHeader = request.getHeader("Authorization");
         String token = requestHeader.substring(7);
@@ -54,7 +54,7 @@ public class CartController {
         String size = cartModel.getSize();
         int quty = cartModel.getQuty();
 
-        List<Product> p = new ArrayList<>();
+        Set<Product> p = new HashSet<>();
         p.add(product);
         Cart_Product cartProduct = new Cart_Product();
         cartProduct.setProduct(p);
@@ -64,20 +64,24 @@ public class CartController {
         Set<Cart_Product> l = new HashSet<>();
 
         Cart  cart = cartRepo.findCartByC(c);
+
         if(cart==null){
             System.out.println("Cart Null");
             cart = new Cart();
             cart.setC(c);
+            cartProduct.setCart(cart);
             l.add(cartProduct);
             cart.setP(l);
         }else{
+            cartProduct.setCart(cart);
             System.out.println("Object Exists");
             l = cart.getP();
             l.add(cartProduct);
             cart.setP(l);
         }
+
         cartRepo.save(cart);
-        return ResponseEntity.ok(cartProduct);
+        return "OK";
     }
 
     @GetMapping("/viewCart")
@@ -111,33 +115,28 @@ public class CartController {
     }
 
     @PutMapping("/deleteCartProduct/{productId}")
-    public ResponseEntity<?>deleteCartProduct(@PathVariable("productId")Long pid,HttpServletRequest request){
-
-        String requestHeader = request.getHeader("Authorization");
-        String token = requestHeader.substring(7);
-        String username = this.jwtHelper.getUsernameFromToken(token);
-
-        Customer customer = customerRepo.findByEmail(username);
+    public String deleteCartProduct(@PathVariable("productId")Long pid){
 
         Cart_Product c = cartProductRepo.findById(pid).orElseThrow();
 
-        Cart cart = cartRepo.findCartByC(customer);
-        boolean check1 = cart.getP().remove(c);
-        System.out.println(check1);
+        Cart cart = c.getCart();
+        System.out.println(cart.getP().remove(c));
 
-        List<Product>p = c.getProduct();
-        Boolean check = c.getProduct().remove(p);
-        System.out.println(check);
+        Set<Product>p = c.getProduct();
+        Product p1 = p.stream().findFirst().orElseThrow();
+            System.out.println("List ptoduct" + p.size()+"    "+p1.getpId());
+
+            System.out.println(c.getProduct().remove(p1));
 
         cartProductRepo.deleteById(pid);
-        return ResponseEntity.ok("OK");
+        return "OK";
     }
 
     @PutMapping("/incQyt/{productId}")
     public ResponseEntity<?>incProductQyt(@PathVariable("productId")Long pid){
         Cart_Product cartProduct = cartProductRepo.findById(pid).orElseThrow();
         int qyt  = cartProduct.getQuty();
-        cartProduct.setQuty(qyt++);
+        cartProduct.setQuty(++qyt);
         cartProductRepo.save(cartProduct);
         return ResponseEntity.ok("OK");
     }
@@ -146,7 +145,7 @@ public class CartController {
     public ResponseEntity<?>decProductQyt(@PathVariable("productId")Long pid){
         Cart_Product cartProduct = cartProductRepo.findById(pid).orElseThrow();
         int qyt  = cartProduct.getQuty();
-        cartProduct.setQuty(qyt--);
+        cartProduct.setQuty(--qyt);
         cartProductRepo.save(cartProduct);
         return ResponseEntity.ok("OK");
     }

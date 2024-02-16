@@ -61,7 +61,7 @@ public class OrderDetailsController {
             Order_Items orderItems1 = new Order_Items();
             orderItems1.setQyt(cartProduct.getQuty());
             orderItems1.setSize(cartProduct.getSize());
-            Product product = cartProduct.getProduct().get(0);
+            Product product = cartProduct.getProduct().stream().findFirst().orElseThrow();
 
             Images images = product.getImage().stream().findFirst().orElseThrow();
             orderItems1.setColor(product.getColor());

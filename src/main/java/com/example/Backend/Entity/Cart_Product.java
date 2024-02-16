@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Cart_Product {
@@ -16,9 +17,20 @@ public class Cart_Product {
     String size;
 
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.LAZY)
-    List<Product> product;
+    Set<Product> product;
+
+    @ManyToOne
+    Cart cart;
 
     int quty;
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     public int getQuty() {
         return quty;
@@ -44,11 +56,11 @@ public class Cart_Product {
         this.id = id;
     }
 
-    public List<Product> getProduct() {
+    public Set<Product> getProduct() {
         return product;
     }
 
-    public void setProduct(List<Product> product) {
+    public void setProduct(Set<Product> product) {
         this.product = product;
     }
 }
