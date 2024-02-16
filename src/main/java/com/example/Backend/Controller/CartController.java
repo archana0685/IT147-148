@@ -120,13 +120,11 @@ public class CartController {
         Cart_Product c = cartProductRepo.findById(pid).orElseThrow();
 
         Cart cart = c.getCart();
-        System.out.println(cart.getP().remove(c));
+        cart.getP().remove(c);
 
         Set<Product>p = c.getProduct();
         Product p1 = p.stream().findFirst().orElseThrow();
-            System.out.println("List ptoduct" + p.size()+"    "+p1.getpId());
-
-            System.out.println(c.getProduct().remove(p1));
+        c.getProduct().remove(p1);
 
         cartProductRepo.deleteById(pid);
         return "OK";
