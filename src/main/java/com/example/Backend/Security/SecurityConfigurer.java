@@ -21,11 +21,11 @@ public class SecurityConfigurer{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+        System.out.println("inside security filter");
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests().requestMatchers("/cart/**","/order/**","/payment/** ","/add/**").authenticated()
-                .requestMatchers("/admin/product/**").hasAuthority("ADMIN")
-                .requestMatchers("/logIn/**","/signUp/**","/product/**","/forgetP/**").permitAll()
+                .requestMatchers("/admin/product/**","/admin/order/**").hasAuthority("ADMIN")
+                .requestMatchers("/logIn/**","/signUp/**","/product/**","/forgetP/**").anonymous()
                 .anyRequest()
                 .authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))

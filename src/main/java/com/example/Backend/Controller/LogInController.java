@@ -29,7 +29,7 @@ public class LogInController {
     JwtHelper helper;
 
     @Autowired
-    UserDetailsService userDetailsService;
+        UserDetailsService userDetailsService;
 
     @Autowired
     AuthenticationManager manager;

@@ -46,7 +46,6 @@ public class AddrController {
             orderDetails1.setState(orderDetails.getState());
             orderDetails1.setTown(orderDetails.getTown());
 
-            orderDetailsRepo.save(orderDetails1);
         }
         return ResponseEntity.ok("OK");
     }

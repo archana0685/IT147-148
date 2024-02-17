@@ -1,8 +1,7 @@
 package com.example.Backend.Controller;
 
-import com.example.Backend.Entity.Images;
-import com.example.Backend.Entity.Product;
-import com.example.Backend.Entity.Product_Size;
+import com.example.Backend.Entity.*;
+import com.example.Backend.Repository.Cart_ProductRepo;
 import com.example.Backend.Repository.ImagesRepo;
 import com.example.Backend.Repository.ProductRepo;
 import com.example.Backend.Repository.ProductSizeRepo;
@@ -13,6 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -31,6 +32,9 @@ public class CrudProduct {
 
     @Autowired
     ProductSizeRepo productSizeRepo;
+
+    @Autowired
+    Cart_ProductRepo cartProductRepo;
 
     @PostMapping("/addProduct")
     @PreAuthorize("hasRole('ADMIN')")
@@ -79,6 +83,26 @@ public class CrudProduct {
             System.out.println(E);
         }
 
+        return ResponseEntity.ok("OK");
+    }
+
+    @PutMapping("/deleteProduct/{pid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteProduct(@PathVariable("pid")Long pid) {
+
+        Product product = productRepo.findById(pid).orElseThrow();
+
+        try {
+            List<Cart_Product> cartProduct = cartProductRepo.findCart_ProductByProduct();
+
+            for (Cart_Product cartProduct1 : cartProduct)
+                cartProduct1.getProduct().remove(product);
+        }
+        catch (Exception E){
+            System.out.println(E);
+        }
+
+        productRepo.deleteById(pid);
         return ResponseEntity.ok("OK");
     }
 
