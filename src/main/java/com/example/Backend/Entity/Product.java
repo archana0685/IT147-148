@@ -1,5 +1,6 @@
 package com.example.Backend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ public class Product {
     Date date;
 
     String Category;
+
 
     @OneToMany(mappedBy = "product",cascade = {CascadeType.ALL},orphanRemoval = true,fetch = FetchType.EAGER)
     Set<Images> image;

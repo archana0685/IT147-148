@@ -26,13 +26,13 @@ public class ProductController {
     ProductRepo productRepo;
 
     @GetMapping("/getProduct")
-    public ResponseEntity<Product> getProduct(){
+    public ResponseEntity<?> getProduct(){
         System.out.println("Calllllllllllllllllllllll");
-        List<Product> p = productRepo.findAll();
-        System.out.println(p.size());
-        Product product = productRepo.findById(5L).orElseThrow();
-        System.out.println("product "+product);
-        return new ResponseEntity<>(product,HttpStatus.ACCEPTED);
+//        List<Product> p = productRepo.findAll();
+//        System.out.println(p.size());
+        Product product = productRepo.findById(3L).orElseThrow();
+//        System.out.println("product "+product);
+        return ResponseEntity.ok(product);
     }
 
     @GetMapping("/getProduct/{id}")

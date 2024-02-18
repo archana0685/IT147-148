@@ -1,5 +1,6 @@
 package com.example.Backend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +11,8 @@ public class Images {
     String imgUrl;
     String imgView;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
     Product product;
 
     public Product getProduct() {
