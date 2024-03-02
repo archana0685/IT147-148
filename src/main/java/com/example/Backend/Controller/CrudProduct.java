@@ -106,6 +106,12 @@ public class CrudProduct {
         return ResponseEntity.ok("OK");
     }
 
+    @PostMapping("/updateProduct")
+    public ResponseEntity<?> updateProduct(@RequestBody Product product){
+        Set<Images>images = product.getImage();
+        return ResponseEntity.ok("OK");
+    }
+
     @GetMapping("/test")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> test(){

@@ -23,7 +23,7 @@ public class SecurityConfigurer{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("inside security filter");
         http.csrf(csrf -> csrf.disable())
-                .authorizeRequests().requestMatchers("/cart/**","/order/**","/payment/** ","/add/**").authenticated()
+                .authorizeRequests().requestMatchers("/cart/**","/order/**","/payment/** ","/addr/**").authenticated()
                 .requestMatchers("/admin/product/**","/admin/order/**").hasAuthority("ADMIN")
                 .requestMatchers("/logIn/**","/signUp/**","/product/**","/forgetP/**").anonymous()
                 .anyRequest()

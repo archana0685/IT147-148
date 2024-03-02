@@ -61,18 +61,20 @@ public class OrderDetailsController {
             Order_Items orderItems1 = new Order_Items();
             orderItems1.setQyt(cartProduct.getQuty());
             orderItems1.setSize(cartProduct.getSize());
-            Product product = cartProduct.getProduct().stream().findFirst().orElseThrow();
 
-            Images images = product.getImage().stream().findFirst().orElseThrow();
-            orderItems1.setColor(product.getColor());
-            orderItems1.setDescription(product.getDescription());
-            orderItems1.setpId(product.getpId());
-            orderItems1.setName(product.getName());
-            orderItems1.setGender(product.getGender());
-            orderItems1.setImage(images.getImgUrl());
+                Product product = cartProduct.getProduct().stream().findFirst().orElseThrow();
+                orderItems1.setColor(product.getColor());
+                orderItems1.setDescription(product.getDescription());
+                orderItems1.setpId(product.getpId());
+                orderItems1.setName(product.getName());
+                orderItems1.setGender(product.getGender());
 
-            orderItems.add(orderItems1);
-            orderItemsRepository.save(orderItems1);
+                Images images = product.getImage().stream().findFirst().orElseThrow();
+                orderItems1.setImage(images.getImgUrl());
+
+                orderItems.add(orderItems1);
+                orderItemsRepository.save(orderItems1);
+
         }
         Addr_details orderDetails = addrrDetailsRepo.findOrder_detailsByCustomer(customer);
         String addr = orderDetails.getAddr()+", "+orderDetails.getCity()+", "+orderDetails.getTown()+", "+orderDetails.getState()+", "+orderDetails.getPincode();
@@ -102,7 +104,7 @@ public class OrderDetailsController {
     }
 
     @GetMapping("/fetchOrders")
-    public List<Orders> fetchOrders(HttpServletRequest request){
+    public ResponseEntity<?> fetchOrders(HttpServletRequest request){
 
         String requestHeader = request.getHeader("Authorization");
         String token = requestHeader.substring(7);
@@ -111,6 +113,6 @@ public class OrderDetailsController {
         Customer customer = customerRepo.findByEmail(username);
         List<Orders>orders = orderRepo.findByCustomer(customer);
 
-        return orders;
+        return ResponseEntity.ok(orders);
     }
 }

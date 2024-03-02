@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/add")
+@RequestMapping("/addr")
 public class AddrController {
 
     @Autowired
@@ -28,6 +28,7 @@ public class AddrController {
     @PutMapping ("/addAddr/{id}")
     public ResponseEntity<?> makeOrder(@PathVariable("id")Long id, @RequestBody Addr_details orderDetails, HttpServletRequest request)
     {
+        System.out.println("inside addAddr");
         if(id==0){
         String requestHeader = request.getHeader("Authorization");
         String token = requestHeader.substring(7);

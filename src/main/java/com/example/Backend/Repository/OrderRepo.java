@@ -11,6 +11,6 @@ import java.util.List;
 public interface OrderRepo extends JpaRepository<Orders,Long> {
 
     @Query("select o from Orders o where o.customer = ?1")
-    public List<Orders> findByCustomer(@Param("c") Customer c);
+    List<Orders> findByCustomer(@Param("c") Customer c);
 
 }
