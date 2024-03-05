@@ -22,7 +22,7 @@ public class AdminOderController {
 
     @GetMapping("/getOrder")
     public ResponseEntity<?> getOrder(){
-
+        System.out.println("getOrder");
         List<Orders>orders1 = orders.findAll();
 
         return ResponseEntity.ok(orders1);

@@ -21,7 +21,6 @@ public class SecurityConfigurer{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("inside security filter");
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests().requestMatchers("/cart/**","/order/**","/payment/** ","/addr/**").authenticated()
                 .requestMatchers("/admin/product/**","/admin/order/**").hasAuthority("ADMIN")

@@ -18,7 +18,7 @@ public class Orders {
     Date date;
     String paymentType;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
