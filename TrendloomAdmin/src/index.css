@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+:root{
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+html,
+body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Source Sans Pro';
+}
+
+.main__container {
+  width: 100%;
+  min-height: 100%;
+}
+
+#root{
+  display: flex;
+  min-height: 100vh;
+}
+
