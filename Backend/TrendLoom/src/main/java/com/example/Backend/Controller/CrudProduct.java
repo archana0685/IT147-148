@@ -27,6 +27,8 @@ public class CrudProduct {
     @PostMapping("/addProduct")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+
+        System.out.println("Product added");
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         product.setDate(date);

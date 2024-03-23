@@ -1,10 +1,18 @@
 package com.example.Backend.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Cart {
 
     @Id
@@ -16,28 +24,4 @@ public class Cart {
 
     @OneToOne
     Customer c;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Cart_Product> getP() {
-        return p;
-    }
-
-    public void setP(List<Cart_Product> p) {
-        this.p = p;
-    }
-
-    public Customer getC() {
-        return c;
-    }
-
-    public void setC(Customer c) {
-        this.c = c;
-    }
 }

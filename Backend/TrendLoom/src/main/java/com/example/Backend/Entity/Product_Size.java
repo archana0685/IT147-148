@@ -4,8 +4,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product_Size {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,35 +22,4 @@ public class Product_Size {
     int pStock;
     float price;
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public Long getPsId() {
-        return psId;
-    }
-
-    public void setPsId(Long psId) {
-        this.psId = psId;
-    }
-
-    public String getpSize() {
-        return pSize;
-    }
-
-    public void setpSize(String pSize) {
-        this.pSize = pSize;
-    }
-
-    public int getpStock() {
-        return pStock;
-    }
-
-    public void setpStock(int pStock) {
-        this.pStock = pStock;
-    }
 }
