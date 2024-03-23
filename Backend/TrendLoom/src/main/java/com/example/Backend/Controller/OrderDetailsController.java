@@ -63,7 +63,7 @@ public class OrderDetailsController {
             Images images = product.getImage().get(0);
             orderItems1.setColor(product.getColor());
             orderItems1.setDescription(product.getDescription());
-            orderItems1.setpId(product.getpId());
+            orderItems1.setPId(product.getPId());
             orderItems1.setName(product.getName());
             orderItems1.setGender(product.getGender());
             orderItems1.setImage(images.getImgUrl());

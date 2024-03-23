@@ -12,7 +12,7 @@ import { useLoginContext } from '../context/login_context';
 const OtpPage = () => {
   const [otp, setOtp] = useState('');
 
-  const locatin = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const {setUname,setUemail,setIsLogin} = useLoginContext();
@@ -21,7 +21,12 @@ const OtpPage = () => {
 
     try
     {
-      const status = await axios.post(import.meta.env.VITE_url+"/signUp/emailVerification", otp);
+      const obj = {
+        email: email ,
+        otp: otp
+      }
+      console.log("Email ",location.state)
+      const status = await axios.post(import.meta.env.VITE_url+"/api/signup/email", obj);
 
       console.log(status);
       const data = status.data

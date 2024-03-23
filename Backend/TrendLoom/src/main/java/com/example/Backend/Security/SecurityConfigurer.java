@@ -25,7 +25,7 @@ public class SecurityConfigurer{
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests().requestMatchers("/cart/**","/order/**","/payment/** ","/addr/**").authenticated()
                 .requestMatchers("/admin/product/**").hasAuthority("ADMIN")
-                .requestMatchers("/logIn/**","/signUp/**","/product/**","/forgetP/**").permitAll()
+                .requestMatchers("/logIn/**","/api/signup/**","/product/**","/forgetP/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().exceptionHandling(ex -> ex.authenticationEntryPoint(jwtEntryPoint))

@@ -114,14 +114,14 @@ const SignupPage = () => {
                 password: password,
             }
 
-            let status = await axios.post(import.meta.env.VITE_url + "/signUp/signupCus", obj);
+            let status = await axios.post(import.meta.env.VITE_url + "/api/signup", obj);
             let data = status.data;
 
             console.log(data);
 
             if (data === "OK") {
                 setClicked(false);
-                navigate('/getotp', { email: { email } });
+                navigate('/getotp', { state: "21ituos016@ddu.ac.in" });
             }
             else {
                 setClicked(false);

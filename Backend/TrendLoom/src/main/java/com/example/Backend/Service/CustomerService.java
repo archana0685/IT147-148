@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface CustomerService {
 
-    public Customer saveCustomer(Customer customer);
-    public void deleteCutomer(Long Id);
-    public Customer findByEmail(String email);
+    Customer saveCustomer(Customer customer);
+    void deleteCutomer(Long Id);
+    Customer findByEmail(String email);
 }

@@ -4,7 +4,7 @@ import com.example.Backend.Entity.Customer;
 import com.example.Backend.Entity.ForgetPasswordToken;
 import com.example.Backend.Model.ResetPassword;
 import com.example.Backend.Mail.LogInVerification;
-import com.example.Backend.Model.ForgetPassword;
+import com.example.Backend.RequestModel.ForgetPassword;
 import com.example.Backend.Repository.CustomerRepo;
 import com.example.Backend.Repository.TokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     CustomerRepo customerRepo;
@@ -25,7 +25,9 @@ public class CustomerImpl implements CustomerService {
 
     @Override
     public Customer findByEmail(String email) {
-        Customer c = customerRepo.findByEmail(email);
-        return c;
+
+        Customer customer = customerRepo.findByEmail(email);
+
+        return customer;
     }
 }

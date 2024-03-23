@@ -1,37 +1,49 @@
 package com.example.Backend.Controller;
 
 import com.example.Backend.Entity.Customer;
+import com.example.Backend.Entity.EmailVerificationToken;
 import com.example.Backend.Entity.Roles;
 import com.example.Backend.Mail.LogInVerification;
 import com.example.Backend.Model.JwtResponse;
 import com.example.Backend.Repository.CustomerRepo;
 import com.example.Backend.Repository.RoleRepo;
+import com.example.Backend.RequestModel.MailToken;
 import com.example.Backend.Security.JwtHelper;
-import com.example.Backend.ServiceImpl.CustomerImpl;
+import com.example.Backend.Service.CustomerService;
+import com.example.Backend.Service.EmailTokenService;
+import com.example.Backend.ServiceImpl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/signUp")
+@RequestMapping("/api")
 public class SignUpController {
 
-    int code;
-    Customer customer;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     CustomerRepo customerRepo;
+
+    @Autowired
+    EmailTokenService emailTokenService;
+
     @Autowired
     LogInVerification mailService;
+
+    @Autowired
+    CustomerService customerService;
 
     @Autowired
     RoleRepo roleRepo;
@@ -44,7 +56,6 @@ public class SignUpController {
 
     @Autowired
     AuthenticationManager manager;
-    CustomerImpl cimpl = new CustomerImpl();
 
     @PostMapping("/")
     public String add(@RequestBody Customer customer){
@@ -53,26 +64,34 @@ public class SignUpController {
         List<Roles>roles = new ArrayList<>();
         roles.add(role);
         customer.setRoles(roles);
-        customerRepo.save(customer);
+        customerService.saveCustomer(customer);
         return "OK";
     }
 
-    @PostMapping("/signupCus")
+    @PostMapping("/signup")
     public String addCustomer(@RequestBody Customer customer) {
 
-        System.out.println("Signup");
         String email = customer.getEmail();
-        Customer c = customerRepo.findByEmail(email);
-        if(c==null){
-            this.customer = customer;
-            customer.setAuth_type("custom");
-            code = (int)(Math.random()*1000000);
+        Customer c = customerService.findByEmail(email);
 
-            if(code/100000 < 0)
-            {
+        if(c==null){
+            Customer customer1 = customer;
+            String password = customer.getPassword();
+            String ePasssword = passwordEncoder.encode(password);
+            customer1.setPassword(ePasssword);
+
+            int code = (int)(Math.random()*1000000);
+            if(code/100000 <= 0)
                 code *= 10;
-            }
-            String body = "Your Verification Code is: "+code;
+
+            String token = Integer.toString(code);
+            EmailVerificationToken emailVerificationToken = new EmailVerificationToken();
+            emailVerificationToken.setCustomer(customer1);
+            emailVerificationToken.setToken(token);
+
+            emailTokenService.addEmailToken(emailVerificationToken);
+
+            String body = "Your Verification Code is: "+token;
             mailService.sendEmail(customer.getEmail(),"Verification Code - TrendLoom",body);
             return "OK";
         }
@@ -81,27 +100,28 @@ public class SignUpController {
 
     }
 
-    @PostMapping("/emailVerification")
-    public ResponseEntity<?> verifyEmail(@RequestBody String codeU){
+    @PostMapping("/signup/email")
+    public ResponseEntity<?> verifyEmail(@RequestBody MailToken mailToken){
 
-        String scode = Integer.toString(code);
-        System.out.println(code);
 
-        System.out.println(scode);
-        if(codeU.equals(scode)){
+        EmailVerificationToken emailVerificationToken = emailTokenService.findByEmail(mailToken.getEmail());
+        String token = emailVerificationToken.getToken();
+        if(token.equals(mailToken.getToken())){
             Roles role = roleRepo.findById(2L).orElseThrow();
             List<Roles>roles = new ArrayList<>();
             roles.add(role);
+
+            Customer customer = emailVerificationToken.getCustomer();
+            customer.setAuth_type("custom");
             customer.setRoles(roles);
-            customerRepo.save(customer);
+            customerService.saveCustomer(customer);
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(customer.getEmail());
-            System.out.println(userDetails.getPassword()+userDetails.getUsername()+userDetails.getAuthorities());
-            String token = this.helper.generateToken(userDetails);
+            String token1 = this.helper.generateToken(userDetails);
 
-            System.out.println("Token: "+token);
-            JwtResponse response = new JwtResponse(token, customer.getName());
+            JwtResponse response = new JwtResponse(token1, customer.getName());
 
+            emailTokenService.deleteToken(emailVerificationToken);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         else {
@@ -109,38 +129,28 @@ public class SignUpController {
         }
     }
 
-    @PostMapping("/signupAuth")
-    public ResponseEntity<?> addCustomerA(@RequestBody Customer cus) {
+    @PostMapping("/signup/auth")
+    public ResponseEntity<?> authAddCustomer(@RequestBody Customer cus) {
 
         String email = cus.getEmail();
-        Customer c = customerRepo.findByEmail(email);
-        if(c==null){
+        Customer c = customerService.findByEmail(email);
+
+        if (c == null) {
 
             cus.setAuth_type("auth");
-            int pass = (int)(Math.random()*1000000);
-            String password = Integer.toString(pass);
-            cus.setPassword(password);
             Roles role = roleRepo.findById(2L).orElseThrow();
-            List<Roles>roles = new ArrayList<>();
+            List<Roles> roles = new ArrayList<>();
             roles.add(role);
             cus.setRoles(roles);
 
-            customerRepo.save(cus);
-
-            UserDetails userDetails = userDetailsService.loadUserByUsername(cus.getEmail());
-            System.out.println(userDetails.getPassword()+userDetails.getUsername());
-
-            String token = this.helper.generateToken(userDetails);
-            System.out.println("Token: "+token);
-            JwtResponse response = new JwtResponse(token, cus.getName());
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-
+            customerService.saveCustomer(cus);
         }
-        else{
-            System.out.println("Email...."+email);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(cus.getEmail());
 
-            return ResponseEntity.ok("Error");}
+        String token = this.helper.generateToken(userDetails);
+        JwtResponse response = new JwtResponse(token, cus.getName());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
