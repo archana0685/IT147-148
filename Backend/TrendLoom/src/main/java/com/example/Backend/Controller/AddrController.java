@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/add")
+@RequestMapping("/addr")
 public class AddrController {
 
     @Autowired
