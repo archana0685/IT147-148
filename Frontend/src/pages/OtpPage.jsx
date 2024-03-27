@@ -21,8 +21,9 @@ const OtpPage = () => {
 
     try
     {
+      
       const obj = {
-        email: email ,
+        email : location.state,
         otp: otp
       }
       console.log("Email ",location.state)
@@ -37,7 +38,7 @@ const OtpPage = () => {
       {
         toast.success("Signup Successful")
         setUname(data.username);
-        setUemail(locatin.email);
+        setUemail(location.state);
         localStorage.setItem("ACCESS_TOKEN", data.jwtToken);
         localStorage.setItem("USERNAME", data.username);
         setIsLogin(true);
@@ -77,7 +78,7 @@ const OtpPage = () => {
               }}
               inputType='tel'
               value={otp}
-              onChange={setOtp}
+              onChange={(e)=>{setOtp(e.target.value)}}
               numInputs={6}
               renderInput={(props) => <input {...props} />}
             />

@@ -121,7 +121,7 @@ const SignupPage = () => {
 
             if (data === "OK") {
                 setClicked(false);
-                navigate('/getotp', { state: "21ituos016@ddu.ac.in" });
+                navigate('/getotp', { state: data.email });
             }
             else {
                 setClicked(false);

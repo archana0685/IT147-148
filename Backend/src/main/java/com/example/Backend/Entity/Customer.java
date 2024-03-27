@@ -36,7 +36,4 @@ public class Customer{
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     List<Roles>roles = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    EmailVerificationToken emailVerificationToken;
-
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.engine.internal.Cascade;
 
 @Entity
 @Getter
@@ -17,7 +18,8 @@ public class EmailVerificationToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String Token;
+    String email;
 
-    @OneToOne(mappedBy = "emailVerificationToken")
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST} )
     Customer customer;
 }

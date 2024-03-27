@@ -79,6 +79,12 @@ public class SignUpController {
             String password = customer.getPassword();
             String ePasssword = passwordEncoder.encode(password);
             customer1.setPassword(ePasssword);
+            customer1.setAuth_type("custom");
+
+            Roles role = roleRepo.findById(2L).orElseThrow();
+            List<Roles>roles = new ArrayList<>();
+            roles.add(role);
+            customer1.setRoles(roles);
 
             int code = (int)(Math.random()*1000000);
             if(code/100000 <= 0)
@@ -106,15 +112,14 @@ public class SignUpController {
 
         EmailVerificationToken emailVerificationToken = emailTokenService.findByEmail(mailToken.getEmail());
         String token = emailVerificationToken.getToken();
+        System.out.println("token" + token+" mailToken "+mailToken.getToken());
         if(token.equals(mailToken.getToken())){
-            Roles role = roleRepo.findById(2L).orElseThrow();
-            List<Roles>roles = new ArrayList<>();
-            roles.add(role);
+
 
             Customer customer = emailVerificationToken.getCustomer();
-            customer.setAuth_type("custom");
-            customer.setRoles(roles);
-            customerService.saveCustomer(customer);
+
+
+//            customerService.saveCustomer(customer);
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(customer.getEmail());
             String token1 = this.helper.generateToken(userDetails);
@@ -125,6 +130,8 @@ public class SignUpController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         else {
+            customerService.deleteCutomer(emailVerificationToken.getCustomer().getCid());
+            emailTokenService.deleteToken(emailVerificationToken);
             return ResponseEntity.ok("Error");
         }
     }

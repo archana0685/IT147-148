@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCutomer(Long Id) {
-
+        customerRepo.deleteById(Id);
     }
 
     @Override
