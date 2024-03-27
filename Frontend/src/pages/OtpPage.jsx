@@ -78,7 +78,7 @@ const OtpPage = () => {
               }}
               inputType='tel'
               value={otp}
-              onChange={(e)=>{setOtp(e.target.value)}}
+              onChange={setOtp}
               numInputs={6}
               renderInput={(props) => <input {...props} />}
             />
