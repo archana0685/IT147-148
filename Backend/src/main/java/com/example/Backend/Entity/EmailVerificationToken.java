@@ -18,6 +18,6 @@ public class EmailVerificationToken {
     Long id;
     String Token;
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "emailVerificationToken")
     Customer customer;
 }

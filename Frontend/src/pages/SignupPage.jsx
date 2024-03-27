@@ -144,7 +144,7 @@ const SignupPage = () => {
                     email : data.user.email,
                 }
     
-                const response = await axios.post(import.meta.env.VITE_url + "/signUp/signupAuth",obj);
+                const response = await axios.post(import.meta.env.VITE_url + "/api/signup/auth",obj);
                 
                 if(response.data === "Error")
                 {

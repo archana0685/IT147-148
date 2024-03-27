@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,5 +35,8 @@ public class Customer{
 
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     List<Roles>roles = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    EmailVerificationToken emailVerificationToken;
 
 }
