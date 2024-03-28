@@ -94,6 +94,7 @@ public class SignUpController {
             EmailVerificationToken emailVerificationToken = new EmailVerificationToken();
             emailVerificationToken.setCustomer(customer1);
             emailVerificationToken.setToken(token);
+            emailVerificationToken.setEmail(customer.getEmail());
 
             emailTokenService.addEmailToken(emailVerificationToken);
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 import styled from 'styled-components';
 import { Button } from '../styles/Button';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -12,21 +12,20 @@ import { useLoginContext } from '../context/login_context';
 const OtpPage = () => {
   const [otp, setOtp] = useState('');
 
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const {setUname,setUemail,setIsLogin} = useLoginContext();
-
+  const {setUname,setUemail,setIsLogin,uemail} = useLoginContext();
+  
   const varifydata = async () => {
 
     try
     {
       
       const obj = {
-        email : location.state,
-        otp: otp
+        email : uemail,
+        token : otp
       }
-      console.log("Email ",location.state)
+      console.log(obj);
       const status = await axios.post(import.meta.env.VITE_url+"/api/signup/email", obj);
 
       console.log(status);
@@ -38,7 +37,6 @@ const OtpPage = () => {
       {
         toast.success("Signup Successful")
         setUname(data.username);
-        setUemail(location.state);
         localStorage.setItem("ACCESS_TOKEN", data.jwtToken);
         localStorage.setItem("USERNAME", data.username);
         setIsLogin(true);

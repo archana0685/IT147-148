@@ -121,7 +121,8 @@ const SignupPage = () => {
 
             if (data === "OK") {
                 setClicked(false);
-                navigate('/getotp', { state: data.email });
+                setUemail(email);
+                navigate('/getotp');
             }
             else {
                 setClicked(false);
