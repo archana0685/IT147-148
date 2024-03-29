@@ -150,6 +150,7 @@ public class SignUpController {
             List<Roles> roles = new ArrayList<>();
             roles.add(role);
             cus.setRoles(roles);
+            cus.setPassword(passwordEncoder.encode("123@er"));
 
             customerService.saveCustomer(cus);
         }
