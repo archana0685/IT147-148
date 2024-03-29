@@ -77,13 +77,13 @@ const AddToCart = ({ product }) => {
   useEffect(() => {
 
     let x = product_sizes.map((curEle) => {
-      return curEle.pSize;
+      return curEle.psize;
     })
 
     if(x)
     {
-        setStock(product_sizes[0].pStock);
-        setselectSize(product_sizes[0].pSize);
+        setStock(product_sizes[0].pstock);
+        setselectSize(product_sizes[0].psize);
         product.setPrice1(product_sizes[0].price)
     }
 
@@ -192,14 +192,14 @@ const AddToCart = ({ product }) => {
                 setselectSize(curEle.size);
                 
                 let obj = product_sizes.filter((Ele) => {
-                  return Ele.pSize === curEle.size;
+                  return Ele.psize === curEle.size;
                 })
                 
-                  if(amount > obj[0].pStock)
+                  if(amount > obj[0].pstock)
                   {
-                      setAmount(obj[0].pStock);
+                      setAmount(obj[0].pstock);
                   }
-                  setStock(obj[0].pStock);
+                  setStock(obj[0].pstock);
                   product.setPrice1(obj[0].price);
               }}>
                 {curEle.size}

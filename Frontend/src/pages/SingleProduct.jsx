@@ -37,7 +37,7 @@ const SingleProduct = () => {
 
   if(product_sizes !== undefined)
   {
-    Stock = product_sizes[0].pStock;
+    Stock = product_sizes[0].pstock;
   }
 
   let prices = parseFloat(price);

@@ -86,10 +86,10 @@ const LoginPage = () => {
             data.map((curEle) => {
 
                 const size_obj = curEle.product[0].product_sizes.filter((ele) => {
-                    return ele.pSize === curEle.size;
+                    return ele.psize === curEle.size;
                 })
 
-                addToCart(curEle.product[0].pId, curEle.product[0].color, curEle.quty, size_obj[0].price, size_obj[0].pStock, curEle.size, curEle.product[0], curEle.id);
+                addToCart(curEle.product[0].pId, curEle.product[0].color, curEle.quty, size_obj[0].price, size_obj[0].pstock, curEle.size, curEle.product[0], curEle.id);
             })
 
             toast.success("Login Successful.", {
@@ -149,10 +149,10 @@ const LoginPage = () => {
                     data1.map((curEle) => {
 
                         const size_obj = curEle.product[0].product_sizes.filter((ele) => {
-                            return ele.pSize === curEle.size;
+                            return ele.psize === curEle.size;
                         })
 
-                        addToCart(curEle.product[0].pId, curEle.product[0].color, curEle.quty, size_obj[0].price, size_obj[0].pStock, curEle.size, curEle.product[0], curEle.id);
+                        addToCart(curEle.product[0].pId, curEle.product[0].color, curEle.quty, size_obj[0].price, size_obj[0].pstock, curEle.size, curEle.product[0], curEle.id);
                     })
 
 
