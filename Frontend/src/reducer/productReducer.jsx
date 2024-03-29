@@ -38,7 +38,7 @@ const ProductReducer = (state, action) => {
             const {products} = state;
 
             const findsingleproduct = products.filter((curEle) => {
-                return curEle.pId===parseInt(action.payload);        
+                return curEle.pid===parseInt(action.payload);        
             })
             
             return{

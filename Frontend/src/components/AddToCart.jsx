@@ -18,7 +18,7 @@ const AddToCart = ({ product }) => {
 
   const navigate = useNavigate();
 
-  let { pId, color, product_sizes } = product.singleProduct;
+  let { pid, color, product_sizes } = product.singleProduct;
   // const [colors, setColors] = useState(color);
   let [amount, setAmount] = useState(1);
   let [selectSize, setselectSize] = useState("");
@@ -123,7 +123,7 @@ const AddToCart = ({ product }) => {
     {
       
       let obj = {
-        pid : pId,
+        pid : pid,
         size : selectSize,
         quty : amount,
       }
@@ -138,7 +138,7 @@ const AddToCart = ({ product }) => {
 
         if(response.data !== null)
         {
-          addToCart(pId, color, amount, product.price1, stock, selectSize, product.singleProduct, response.data.id);
+          addToCart(pid, color, amount, product.price1, stock, selectSize, product.singleProduct, response.data.id);
           navigate("/cart");
         }
         else

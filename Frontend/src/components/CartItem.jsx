@@ -6,7 +6,7 @@ import { useCartContext } from '../context/cart_context';
 import axios from 'axios';
 import AuthHeader from '../Helpers/AuthHeader';
 
-const CartItem = ({id,name,image,color,price,size,amount, max, cartpId}) => {
+const CartItem = ({id,name,image,color,price,size,amount, max, cartpid}) => {
 
     const { removeItem, setDecrease, setIncrement } = useCartContext();
 
@@ -68,7 +68,7 @@ const CartItem = ({id,name,image,color,price,size,amount, max, cartpId}) => {
                 setDecrease = {() => setDecrease(id,size)}
                 setIncrease = {() => setIncrement(id,size)}
                 id = {id}
-                cartpId = {cartpId}
+                cartpid = {cartpid}
                 max = {max}
             />
 

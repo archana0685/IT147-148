@@ -3,7 +3,7 @@ import React from 'react'
 import { FaMinus, FaPlus } from "react-icons/fa";
 import AuthHeader from '../Helpers/AuthHeader';
 
-const CartAmountToggle = ({amount, setDecrease, setIncrease, id, cartpId, max}) => {
+const CartAmountToggle = ({amount, setDecrease, setIncrease, id, cartpid, max}) => {
 
   const Decrease = async ( ) => {
     
@@ -17,7 +17,7 @@ const CartAmountToggle = ({amount, setDecrease, setIncrease, id, cartpId, max}) 
         const headers = AuthHeader();
 
       
-        const res = await axios.put(import.meta.env.VITE_url + `/cart/decQyt/${cartpId}`, null, { headers });
+        const res = await axios.put(import.meta.env.VITE_url + `/cart/decQyt/${cartpid}`, null, { headers });
 
    
         if(res.data === "OK")
@@ -45,7 +45,7 @@ const CartAmountToggle = ({amount, setDecrease, setIncrease, id, cartpId, max}) 
 
       const headers = AuthHeader();
       
-      const res = await axios.put(import.meta.env.VITE_url + `/cart/incQyt/${cartpId}`, null, {headers});
+      const res = await axios.put(import.meta.env.VITE_url + `/cart/incQyt/${cartpid}`, null, {headers});
 
 
       if(res.data === "OK")

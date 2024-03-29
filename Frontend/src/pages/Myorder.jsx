@@ -24,7 +24,7 @@ const Myorder = () => {
     products.map((ele) => {
       
 
-        if(ele.pId === id)
+        if(ele.pid === id)
         {
           ele.product_sizes.map((curele)=>{
 
@@ -93,7 +93,7 @@ const Myorder = () => {
                                       style: "currency",
                                       currency: "INR",
                                       minimumFractionDigits: 2,
-                                    }).format((getProductPrice(curEle.pId, curEle.size) / 100)*curEle.qyt)
+                                    }).format((getProductPrice(curEle.pid, curEle.size) / 100)*curEle.qyt)
                                   }
                                 </p>
 
@@ -106,7 +106,7 @@ const Myorder = () => {
 
                                 <div className='buttons'>
 
-                                  <button className='view-product-button' onClick={() => navigate(`/singleproduct/${curEle.pId}`)}>View Product</button>
+                                  <button className='view-product-button' onClick={() => navigate(`/singleproduct/${curEle.pid}`)}>View Product</button>
 
                                   <button className='view-product-button'>Track Order</button>
                                 </div>

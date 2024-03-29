@@ -1,6 +1,6 @@
 const cartReducer = (state, action) => {
     if (action.type === "ADD_TO_CART") {
-      let { id, color, amount, price1, stock, size, product, cartpId } = action.payload;
+      let { id, color, amount, price1, stock, size, product, cartpid } = action.payload;
   
       // tackle the existing product
   
@@ -35,7 +35,7 @@ const cartReducer = (state, action) => {
       } else {
         let cartProduct = {
           id: id,
-          cartpId : cartpId,
+          cartpid : cartpid,
           name: product.name,
           color,
           amount,

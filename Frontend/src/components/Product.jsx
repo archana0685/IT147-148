@@ -5,13 +5,13 @@ import { RotatingLines } from 'react-loader-spinner';
 
 const Product = (curEle) => {
 
-    const { pId, name, image, price, category, product_sizes } = curEle;
+    const { pid, name, image, price, category, product_sizes } = curEle;
 
 
     if (image.length === 0) {
         return (
             <>
-                <NavLink data-aos="zoom-in-up" to={`/singleproduct/${pId}`}>
+                <NavLink data-aos="zoom-in-up" to={`/singleproduct/${pid}`}>
                     <div className="card">
                         <figure style={{ height: "15rem" }}>
                             <RotatingLines
@@ -51,7 +51,7 @@ const Product = (curEle) => {
 
     return (
         <>
-            <NavLink data-aos="zoom-in-up" to={`/singleproduct/${pId}`}>
+            <NavLink data-aos="zoom-in-up" to={`/singleproduct/${pid}`}>
                 <div className="card">
                     <figure>
                         <img src={imageurl[0].imgUrl} alt={name} />

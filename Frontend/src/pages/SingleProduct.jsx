@@ -29,7 +29,7 @@ const SingleProduct = () => {
       getSingleProduct(id);
     },[]);
 
-  const { pId, name, price,company, description, category, reviews, stars, image, product_sizes } = singleProduct;
+  const { pid, name, price,company, description, category, reviews, stars, image, product_sizes } = singleProduct;
 
 // console.log(description);
 
@@ -99,7 +99,7 @@ const SingleProduct = () => {
                 <p>Availabel :<span> {Stock > 0 ? "In Stock" : "Not Available"}</span></p>
 
                 <p>
-                  ID : <span> {pId} </span>
+                  ID : <span> {pid} </span>
                 </p>
                 <p>
                   Brand :<span> {company} </span>

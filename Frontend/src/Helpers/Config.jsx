@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: "trendloom-6998b",
   storageBucket: "trendloom-6998b.appspot.com",
   messagingSenderId: "1092683176518",
-  appId: "1:1092683176518:web:720f47a2d7c4c9713bc847",
+  appid: "1:1092683176518:web:720f47a2d7c4c9713bc847",
   measurementId: "G-GZNFJLXVWD"
 };
 

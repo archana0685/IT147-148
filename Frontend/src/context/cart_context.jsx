@@ -28,8 +28,8 @@ const CartProvider = ({ children }) => {
 
   const {isLogin} = useLoginContext();
 
-  const addToCart = (id, color, amount, price1, stock ,size, product, cartpId) => {
-    dispatch({ type: "ADD_TO_CART", payload: { id, color, amount, price1, stock, size, product, cartpId } });
+  const addToCart = (id, color, amount, price1, stock ,size, product, cartpid) => {
+    dispatch({ type: "ADD_TO_CART", payload: { id, color, amount, price1, stock, size, product, cartpid } });
 
   };
 
@@ -78,7 +78,7 @@ const CartProvider = ({ children }) => {
               return ele.psize === curEle.size;
           })
 
-          addToCart(curEle.product[0].pId, curEle.product[0].color, curEle.quty, size_obj[0].price, size_obj[0].pstock, curEle.size, curEle.product[0], curEle.id);
+          addToCart(curEle.product[0].pid, curEle.product[0].color, curEle.quty, size_obj[0].price, size_obj[0].pstock, curEle.size, curEle.product[0], curEle.id);
       })
     }
 
