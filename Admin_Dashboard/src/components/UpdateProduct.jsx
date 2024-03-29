@@ -90,7 +90,7 @@ const UpdateProduct = () => {
 
     let flag = 0;
     sizes.map((ele) => {
-      if (ele.pSize === size.toUpperCase()) {
+      if (ele.psize === size.toUpperCase()) {
         flag = 1;
       }
     })
@@ -102,8 +102,8 @@ const UpdateProduct = () => {
     }
 
     setSizes([...sizes, {
-      pSize: size.toUpperCase(),
-      pStock: stock * 1,
+      psize: size.toUpperCase(),
+      pstock: stock * 1,
       price: price * 100,
     }])
 
@@ -115,7 +115,7 @@ const UpdateProduct = () => {
   const deletesize = (si, st, pri) => {
 
     let s = sizes.filter((ele) => {
-      return (ele.pSize !== si && ele.pStock !== st && ele.price !== pri);
+      return (ele.psize !== si && ele.pstock !== st && ele.price !== pri);
     })
 
     setSizes(s);
@@ -376,8 +376,8 @@ const UpdateProduct = () => {
 
                     return (
                       <tr key={index} style={{gap : "2rem"}}>
-                        <td>{ele.pSize}</td>
-                        <td>{ele.pStock}</td>
+                        <td>{ele.psize}</td>
+                        <td>{ele.pstock}</td>
                         <td>{ele.price / 100} &#x20b9;</td>
                         <td style={{ alignItems: "center", gap : "2rem", display : "flex" }}>
                           <FaEdit style={{ cursor: "pointer" }} onClick={(e) => {
@@ -386,19 +386,19 @@ const UpdateProduct = () => {
 
                             let x = sizes.filter((elem) => {
 
-                              return (elem.pSize !== ele.pSize);
+                              return (elem.psize !== ele.psize);
                             })
 
                             setSizes(x);
 
-                            setSize(ele.pSize);
-                            setStock(ele.pStock);
+                            setSize(ele.psize);
+                            setStock(ele.pstock);
                             setPrice(ele.price / 100);
                           }} />
 
 <AiFillDelete style={{ cursor: "pointer" }} onClick={(e) => {
                             e.preventDefault();
-                            deletesize(ele.pSize, ele.pStock, ele.price)
+                            deletesize(ele.psize, ele.pstock, ele.price)
                           }} />
                         </td>
 

@@ -13,7 +13,7 @@ const RecentOrders = () => {
     products?.map((ele) => {
       if (ele.pId === id) {
         ele.product_sizes?.map((curele) => {
-          if (curele.pSize === size) {
+          if (curele.psize === size) {
             price = curele.price;
           }
         });

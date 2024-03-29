@@ -174,7 +174,7 @@ const Products = () => {
                           Product.product_sizes.map((sizes, index) => {
 
                             return (<tr key={index}>
-                              <td>{sizes.pSize}</td>
+                              <td>{sizes.psize}</td>
                             </tr>)
                           })
                         }
@@ -194,7 +194,7 @@ const Products = () => {
                           Product.product_sizes.map((sizes, index) => {
 
                             return (<tr key={index}>
-                              <td>{sizes.pStock}</td>
+                              <td>{sizes.pstock}</td>
                             </tr>)
                           })
                         }
