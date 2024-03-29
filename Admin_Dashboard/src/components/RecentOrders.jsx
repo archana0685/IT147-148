@@ -11,7 +11,7 @@ const RecentOrders = () => {
     let price;
 
     products?.map((ele) => {
-      if (ele.pId === id) {
+      if (ele.pid === id) {
         ele.product_sizes?.map((curele) => {
           if (curele.psize === size) {
             price = curele.price;
@@ -26,7 +26,7 @@ const RecentOrders = () => {
 
   Orders?.map((order) => {
     order?.orderItems?.map((item) => {
-      let price = getProductPrice(item.pId, item.size)/100;
+      let price = getProductPrice(item.pid, item.size)/100;
       let index = null;
 
       topsellingdata.map((data, ind) => {

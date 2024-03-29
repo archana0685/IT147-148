@@ -15,7 +15,7 @@ const CategoryChart = () => {
     let price;
 
     products?.map((ele) => {
-        if(ele.pId === id)
+        if(ele.pid === id)
         {
           ele.product_sizes?.map((curele)=>{
 
@@ -55,7 +55,7 @@ const CategoryChart = () => {
         
         if(item.category !== null)
         {
-            let price = getProductPrice(item.pId,item.size)/100;
+            let price = getProductPrice(item.pid,item.size)/100;
             let ind = categoryData.indexOf(item.category);
 
             salecategorywise[ind] = salecategorywise[ind] + (price*item.qyt);

@@ -70,7 +70,7 @@ const Products = () => {
       (item) => {
         return (
           item.name.toLowerCase().includes(search.toLowerCase()) ||
-          item.pId.toString().toLowerCase().includes(search.toLowerCase()) ||
+          item.pid.toString().toLowerCase().includes(search.toLowerCase()) ||
           item.gender.toLowerCase().includes(search.toLowerCase()) ||
           item.color.toLowerCase().includes(search.toLowerCase())
         )
@@ -154,7 +154,7 @@ const Products = () => {
                 return (
                   <>
                     <tr key={index} style={{textAlign : "center"}}>
-                      <td>{Product.pId}</td>
+                      <td>{Product.pid}</td>
                       <td>{Product.name}</td>
                       <td>{Product.gender}</td>
                       <td style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} data-tooltip-id={index+1}>{Product.description}
@@ -227,7 +227,7 @@ const Products = () => {
                         &nbsp;&nbsp;
                         <FaEdit
                           onClick={() => {
-                            getSingleProduct(Product.pId);
+                            getSingleProduct(Product.pid);
                             setUpdateProduct(index);
                           }}
                         />
